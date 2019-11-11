@@ -1,0 +1,7 @@
+mattressplace/secret_settings.py
+
+*.swp
+
+*.pyc
+
+db.sqlite3
