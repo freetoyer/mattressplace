@@ -59,7 +59,7 @@
                   </div>
                   <!-- RD Navbar Nav-->
                   <ul class="rd-navbar-nav">
-                    <li class="active"><a href="base.html">О нас</a>
+                    <li class="active"><a href="{% url 'base' %}">О нас</a>
                     </li>
                     <li><a href="about-us.html">Продукция</a>
                     </li>
@@ -72,6 +72,9 @@
           </nav>
         </div>
       </header>
+
+      {% block content %}
+
       <!-- Swiper-->
       <section class="section swiper-slider_style-3 swiper-buttons-alternate">
         <div class="swiper-container swiper-slider swiper-slider_height-1" data-loop="true" data-autoplay="4200" data-simulate-touch="false" data-additional-slides="0" data-custom-prev="#swiper-prev" data-custom-next="#swiper-next" data-custom-slide-effect="interLeaveEffect">
@@ -141,24 +144,21 @@
             </div>
             <div class="isotope" data-isotope-layout="fitRows" data-isotope-group="products">
               <div class="row row-offset-2">
-                <div class="col-6 col-md-4 col-lg-6 isotope-item" data-filter="Category 1">
+
+                {% for category in categories %}
+
+                <div class="col-6 col-md-4 col-lg-6 isotope-item" data-filter="Category 2">                  
                   <!-- Product-->
-                  <article class="product"> <a class="product__image-wrap" href="#"><img class="product__image" src='{% static "images/mattress_images/about-2-273x214.jpg" %}' alt="" width="540" height="200"/></a>
+                  <article class="product"> <a class="product__image-wrap" href={{ category.get_absolute_url }}><img class="product__image" src={{ category.image.url }} alt="" width="540" height="200"/></a>
                     <div class="product__main">
-                      <p class="product__title"><a href="#">Пружинные матрасы</a></p>
+                      <p class="product__title"><a href={{ category.get_absolute_url }}>{{ category.name }}</a></p>
                     </div>
-                    <div class="product__footer"><a class="button button-xs button-gray-2" href="#">details</a></div>
+                    <div class="product__footer"><a class="button button-xs button-gray-2" href={{ category.get_absolute_url }}>Подробнее</a></div>
                   </article>
                 </div>
-                <div class="col-6 col-md-4 col-lg-6 isotope-item" data-filter="Category 2">
-                  <!-- Product-->
-                  <article class="product"> <a class="product__image-wrap" href="#"><img class="product__image" src='{% static "images/mattress_images/Exuberant-1-600x424.jpg" %}' alt="" width="540" height="200"/></a>
-                    <div class="product__main">
-                      <p class="product__title"><a href="#">Беспружинные матрасы</a></p>
-                    </div>
-                    <div class="product__footer"><a class="button button-xs button-gray-2" href="#">details</a></div>
-                  </article>
-                </div>
+
+                {% endfor %}
+
               </div>
             </div>
           </div>
@@ -239,7 +239,10 @@
               </div>
             </div>
           </div>
-      </section>    
+      </section>
+
+      {% endblock content %}
+
       <!-- Page Footer-->
       <footer class="footer-classic bg-gray-8">
         <div class="container">
