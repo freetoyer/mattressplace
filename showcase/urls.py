@@ -19,4 +19,5 @@ from . import views
 urlpatterns = [
     path('', views.base_view, name='base'),
     re_path(r'^category/(?P<category_slug>\w+)/$', views.category_view, name='category_detail'),
+    path('contacts', views.contacts_view, name='contacts'),
 ]

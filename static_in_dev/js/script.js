@@ -1352,3 +1352,17 @@
 
 	});
 }());
+
+
+// Choose thumbs of product
+$(document).ready(function(){
+    var Thumbs = $(".prev_min img");
+    Thumbs.on('click', function(){
+        var product_slug = $(this).attr('data-slug');
+        var Large = $(".prev_full a").filter(function() {
+                return $(this).attr("data-slug")==product_slug;
+            });
+        Large.find("img").attr("src", $(this).attr("src"));
+        Large.attr("href", $(this).attr("src"));
+    });
+});

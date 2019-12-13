@@ -1,6 +1,95 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class='col-sm-12'>
-<h2>{{ category.name }}</h2>
+
+
+  
+<!-- Product of Category-->
+<section class="section section-md bg-default">
+  <div class="container">
+    <div class="container">
+      <h3>{{ category.name }}</h3>
+    </div>
+      <div class="container">
+        {% for product in products %}
+        <div class="row justify-content-md-center justify-content-xl-between">
+            <div class="col-md-10 col-lg-7 product_info_container_paddings">
+              <div class="product_info">
+                {% for product_image in product_images %}
+                  {% ifequal product_image.product product %}
+                    {% if product_image.main_image %}
+                      <div class="prev_full">
+                        <a class="thumb-elegant" href="{{ product_image.image.url }}" data-lightgallery="item" data-slug="{{ product.slug }}">
+                          <img src="{{ product_image.image.url }}" alt="" width="540" height="451"/>
+                          <div class="thumb-elegant__overlay"></div>
+                        </a>
+                      </div>
+                    {% endif %}
+                  {% endifequal %}
+                {% endfor %}
+                <div class="group-6-columns" data-lightgallery="group">
+                  {% for product_image in product_images %}
+                    {% ifequal product_image.product product %}
+                      <div class="carousel-item active prev_min">
+                        <img src="{{ product_image.image.url }}" alt="" max-width="130" max-height="130" data-slug="{{ product.slug }}"/>
+                        <div class="thumb-elegant__overlay"></div>
+                      </div>
+                    {% endifequal %}
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-10 col-lg-5 product_info_container_paddings">
+              <div class="product_info">
+                <div class="container">
+                  <h5>{{ product.title }}</h5>
+                  <p><strong>Рекомендованные розничные цены</strong></p>
+                  <br>
+                  <table class='table'>
+                    <tr>
+                      <td class='text-center'><strong>Размер, см</strong></td>
+                      <td class='text-center'><strong>Цена, Руб.</strong></td>
+                    </tr>
+                    {% for product_size in product_sizes %}
+                      {% ifequal product_size.product product %}                
+                      <tr>    
+                        <td class='text-center'>{{ product_size.size }}</td>
+                        <td class="text-center">{{ product_size.price }}</td>
+                      </tr>
+                      {% endifequal %}
+                    {% endfor %}
+                    </tr>
+                  </table>
+                </div>
+              </div>            
+            </div>
+            <div class="row product_info_container_paddings">
+              <div class="col-md-5">
+                <div class="product_info">
+                  <div class="container">
+                    <p>{{ product.characteristics|safe }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7 product_info_container_paddings">
+                <div class="product_info">
+                  <div class="container">
+                    <p>{{ product.description|safe }}</p>
+                  </div>
+                </div>
+              </div>
+              <br>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+<script src='{% static "js/script.js" %}'></script>
 {% endblock content %}

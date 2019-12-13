@@ -22,7 +22,7 @@
     <div class="preloader" id="preloader">
       <div class="page-loader-logo">
         <div class="brand">
-          <div class="brand__name"><img src='{% static "images/logo.png" %}' alt="" width="100" height="50"/>
+          <div class="brand__name"><img src='{% static "images/logo.png" %}' alt="" width="100" height="80"/>
           </div>
         </div>
       </div>
@@ -45,25 +45,32 @@
                 <div class="rd-navbar-panel">
                   <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
                   <!-- RD Navbar Brand-->
-                  <div class="rd-navbar-brand"><a class="brand" href="index.html">
-                      <div class="brand__name"><img src='{% static "images/logo.png" %}' alt="" width="100" height="50"/>
+                  <div class="rd-navbar-brand"><a class="brand" href="{% url 'base' %}">
+                      <div class="brand__name"><img src='{% static "images/logo.png" %}' alt="" width="80" height="50"/>
                       </div></a></div>
                 </div>
                 <!-- RD Navbar Nav-->
                 <div class="rd-navbar-nav-wrap">
-                  <div class="rd-navbar-main-item">
-                    <div class="rd-navbar-nav row">
-                      <div><img src='{% static "images/phone 30x30.jpg" %}' alt="" width="30" height="30"/></div>
-                      <div class="phone_number">+7 (***) *** - ** - **</div>
+                  <ul class="rd-navbar-nav">
+                    <div class="unit flex-row unit-spacing-xxs">
+                      <div class="unit__left"><span class="icon icon-sm icon-primary material-icons-local_phone"></span></div>
+                      <div class="unit__body"><a class="phone_number" href="tel:#">922-26-08</a></div>
                     </div>
-                  </div>
+                  </ul>
                   <!-- RD Navbar Nav-->
                   <ul class="rd-navbar-nav">
-                    <li class="active"><a href="{% url 'base' %}">О нас</a>
+                    <li><a href="{% url 'base' %}">О нас</a>
                     </li>
-                    <li><a href="about-us.html">Продукция</a>
+                    <li class="nav-item dropdown">
+                      <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Продукция</a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% for category in categories %}
+                          <div class="dropdown-divider"></div>
+                          <div><a class="dropdown-item" href="{{ category.get_absolute_url }}">{{ category.name }}</a></div>
+                        {% endfor %}
+                      </div>
                     </li>
-                    <li><a href="contacts.html">Контакты</a>
+                    <li><a href="{% url 'contacts' %}">Контакты</a>
                     </li>
                   </ul>
                 </div>
@@ -72,9 +79,6 @@
           </nav>
         </div>
       </header>
-
-      {% block content %}
-
       <!-- Swiper-->
       <section class="section swiper-slider_style-3 swiper-buttons-alternate">
         <div class="swiper-container swiper-slider swiper-slider_height-1" data-loop="true" data-autoplay="4200" data-simulate-touch="false" data-additional-slides="0" data-custom-prev="#swiper-prev" data-custom-next="#swiper-next" data-custom-slide-effect="interLeaveEffect">
@@ -117,6 +121,9 @@
           <div class="swiper-button-next"><span>Next</span></div>
         </div>
       </section>
+
+      {% block content %}
+
       <!-- About us-->
       <section class="section section-md bg-default text-center">
         <div class="container">
@@ -196,12 +203,10 @@
               <h3>Сертификаты качества</h3>
               <br>
               <div class="group-3-columns" style="max-width: 430px;" data-lightgallery="group">
-                <div class="column-item"><a class="thumb-light" href="images/certificate-1-847x1200.jpg" data-lightgallery="item"><img src='{% static "images/mattress_images/okeo-teks.jpg" %}' alt="" width="120" height="171"/>
+                {% for certificate in certificates %}
+                <div class="column-item"><a class="thumb-light" href="{{ certificate.image.url }}" data-lightgallery="item"><img src='{{ certificate.image.url }}' alt="" width="120" height="171"/>
                     <div class="thumb-light__overlay"></div></a></div>
-                <div class="column-item"><a class="thumb-light" href="images/certificate-1-847x1200.jpg" data-lightgallery="item"><img src='{% static "images/mattress_images/okeo-teks.jpg" %}' alt="" width="120" height="171"/>
-                    <div class="thumb-light__overlay"></div></a></div>
-                <div class="column-item"><a class="thumb-light" href="images/certificate-1-847x1200.jpg" data-lightgallery="item"><img src='{% static "images/mattress_images/okeo-teks.jpg" %}' alt="" width="120" height="171"/>
-                    <div class="thumb-light__overlay"></div></a></div>
+                {% endfor %}
               </div>
             </div>
           </div>
@@ -251,7 +256,7 @@
             <div class="row row-10">
               <div class="col-md-6 text-md-left">
                 <!-- Rights-->
-                <p class="rights"><span>Quarex</span><span>&nbsp;&copy;&nbsp;</span><span class="copyright-year"></span>. All Rights Reserved. Design by <a href="https://www.templatemonster.com">TemplateMonster</a></p>
+                <p class="rights"><span>Quarex</span><span>&nbsp;&copy;&nbsp;</span><span class="copyright-year"></span>. All Rights Reserved. Design by <a href="https://www.templatemonster.com">TemplateMonster</a><br>Backend and custom design by freetoyer</p>
               </div>
               <div class="col-md-6 text-md-right">
                 <ul class="list-inline-xxs">
@@ -271,6 +276,7 @@
     <!-- Global Mailform Output-->
     <div class="snackbars" id="form-output-global"></div>
     <!-- Javascript-->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src='{% static "js/core.min.js" %}'></script>
     <script src='{% static "js/script.js" %}'></script>
   </body>
