@@ -11,7 +11,24 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-from .secret_settings import *
+import json
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = []
+
+
+# JSON-based secret_settings module
+with open("mattressplace/secret_settings.json") as f:
+    secrets = json.loads(f.read())
+
+def get_secret(setting, secrets=secrets):
+    return secrets[setting]
+
+SECRET_KEY = get_secret("SECRET_KEY")
+DATABASES = get_secret("DATABASES")
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,11 +40,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 # with open(BASE_DIR + '/secret_key.txt') as f:
 #    SECRET_KEY = f.read().strip()
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
 
 
 # Application definition

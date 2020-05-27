@@ -39,14 +39,12 @@ class Product(models.Model):
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
     title = models.CharField(max_length=200)
-    short_title = models.CharField(max_length=200)
     characteristics = RichTextField()
     description = RichTextField()
     slug = models.SlugField()
 
     def __str__(self):
         return self.title
-
 
     class Meta:
         verbose_name = 'Продукт'
@@ -56,10 +54,7 @@ class Product(models.Model):
 def pre_save_product_slug(sender, instance, *args, **kwargs):
     if not instance.slug:
         slug = slugify(instance.title)
-        short_title = 'матрас ' + slug.capitalize()
         instance.slug = slug
-        instance.short_title = short_title
-
 
 
 class Product_Image(models.Model):
@@ -71,13 +66,12 @@ class Product_Image(models.Model):
     slug = models.SlugField()
     main_image = models.BooleanField(default=False)
 
- 
+    def __str__(self):
+        return self.name
+     
     class Meta:
         verbose_name = 'Фото продукта'
         verbose_name_plural = 'Фото продуктов'
-
-    def __str__(self):
-        return self.name
 
 @receiver(pre_save, sender=Product_Image)
 def pre_save_product_image_slug(sender, instance, *args, **kwargs):
@@ -88,8 +82,8 @@ def pre_save_product_image_slug(sender, instance, *args, **kwargs):
             image_number = last_id_dict['id'] + 1
         else:
             image_number = 1
-        slug = slugify(instance.product.title) + '_' + str(image_number)
-        name = slug.upper()
+        slug = instance.product.slug + '_' + str(image_number)
+        name = slug.capitalize()
         instance.image_number = image_number
         instance.slug = slug
         instance.name = name
@@ -114,8 +108,8 @@ class Product_Size(models.Model):
 @receiver(pre_save, sender=Product_Size)
 def pre_save_product_size_slug(sender, instance, *args, **kwargs):
     if not instance.slug:
-        slug = slugify(instance.product.title) + '_' + instance.size
-        name = slugify(instance.product.title).upper() + '_' + instance.size 
+        slug = instance.product.slug + '_' + instance.size
+        name = slug.capitalize()
         instance.slug = slug
         instance.name = name
 
@@ -126,6 +120,7 @@ class Certificate(models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField()
     image = models.ImageField(upload_to=image_folder)
+    description = RichTextField()
 
     def __str__(self):
         return self.name
@@ -135,7 +130,30 @@ class Certificate(models.Model):
         verbose_name_plural = 'Сертификаты'
 
 @receiver(pre_save, sender=Certificate)
-def pre_save_product_size_slug(sender, instance, *args, **kwargs):
+def pre_save_certificate_slug(sender, instance, *args, **kwargs):
     if not instance.slug:
         slug = slugify(instance.name, allow_unicode=True)
         instance.slug = slug
+
+
+
+class CatalogueFile(models.Model):
+    name = models.CharField(max_length=100)
+    slug = models.SlugField()
+    file = models.FileField(upload_to=image_folder)
+
+    def __str__(self):
+        return self.name
+
+#    def get_absolute_url(self):
+#       return reverse('category_detail', kwargs={'category_slug': self.slug})
+ 
+    class Meta:
+        verbose_name = 'Каталог'
+        verbose_name_plural = 'Каталоги'
+
+    def get_absolute_url(self):
+        url = self.file.url
+        path = url[1:]
+        return reverse('catalogue_file_download', kwargs={'path': path})
+
