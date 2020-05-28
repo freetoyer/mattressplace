@@ -8,7 +8,7 @@ class Product_Admin(admin.ModelAdmin):
 
 
 class Product_Image_Admin(admin.ModelAdmin):
-    readonly_fields = ('image_number', 'slug', 'name',)
+    readonly_fields = ('slug', 'name',)
 
 
 class Product_Size_Admin(admin.ModelAdmin):

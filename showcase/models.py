@@ -4,8 +4,8 @@ from decimal import Decimal
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.utils.text import slugify
-from ckeditor.fields import RichTextField
 
+from ckeditor.fields import RichTextField
 
 
 def image_folder(instance, filename):
@@ -17,8 +17,8 @@ def image_folder(instance, filename):
         foldername = instance.slug
     return '{0}/{1}/{2}'.format(general_folder, foldername, filename)
 
-class Category(models.Model):
 
+class Category(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField()
     image = models.ImageField(upload_to=image_folder)
@@ -34,9 +34,7 @@ class Category(models.Model):
         verbose_name_plural = 'Категории'
 
 
-
 class Product(models.Model):
-
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
     title = models.CharField(max_length=200)
     characteristics = RichTextField()
@@ -50,18 +48,16 @@ class Product(models.Model):
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
 
-@receiver(pre_save, sender=Product)
-def pre_save_product_slug(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        slug = slugify(instance.title)
-        instance.slug = slug
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            slug = slugify(self.title)
+            self.slug = slug
+            super().save(*args, **kwargs)
 
 
 class Product_Image(models.Model):
-
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_images')
     image = models.ImageField(upload_to=image_folder)
-    image_number = models.PositiveIntegerField()
     name = models.CharField(max_length=50)
     slug = models.SlugField()
     main_image = models.BooleanField(default=False)
@@ -73,25 +69,19 @@ class Product_Image(models.Model):
         verbose_name = 'Фото продукта'
         verbose_name_plural = 'Фото продуктов'
 
-@receiver(pre_save, sender=Product_Image)
-def pre_save_product_image_slug(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        product_images = Product_Image.objects.all() 
-        if product_images:
-            last_id_dict = product_images.order_by('-id').values('id')[0]
-            image_number = last_id_dict['id'] + 1
-        else:
-            image_number = 1
-        slug = instance.product.slug + '_' + str(image_number)
-        name = slug.capitalize()
-        instance.image_number = image_number
-        instance.slug = slug
-        instance.name = name
-
-
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            if self.product.product_images:
+                image_number = self.product.product_images.count() + 1
+            else:
+                image_number = 1
+            slug = self.product.slug + '_' + str(image_number)
+            self.slug = slug
+            self.name = slug.capitalize()
+            super().save(*args, **kwargs)
+            
 
 class Product_Size(models.Model):
-
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_sizes')
     size = models.CharField(max_length=10)
     name = models.CharField(max_length=50)
@@ -105,18 +95,15 @@ class Product_Size(models.Model):
         verbose_name = 'Размер'
         verbose_name_plural = 'Размеры'
 
-@receiver(pre_save, sender=Product_Size)
-def pre_save_product_size_slug(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        slug = instance.product.slug + '_' + instance.size
-        name = slug.capitalize()
-        instance.slug = slug
-        instance.name = name
-
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            slug = self.product.slug + '_' + self.size
+            self.slug = slug
+            self.name = slug.capitalize()
+            super().save(*args, **kwargs)
 
 
 class Certificate(models.Model):
-
     name = models.CharField(max_length=50)
     slug = models.SlugField()
     image = models.ImageField(upload_to=image_folder)
@@ -128,13 +115,11 @@ class Certificate(models.Model):
     class Meta:
         verbose_name = 'Сертификат'
         verbose_name_plural = 'Сертификаты'
-
-@receiver(pre_save, sender=Certificate)
-def pre_save_certificate_slug(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        slug = slugify(instance.name, allow_unicode=True)
-        instance.slug = slug
-
+        
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name, allow_unicode=True)
+            super().save(*args, **kwargs)
 
 
 class CatalogueFile(models.Model):
