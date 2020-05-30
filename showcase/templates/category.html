@@ -15,26 +15,22 @@
         <div class="row justify-content-md-center justify-content-xl-between">
             <div class="col-md-10 col-lg-7 product_info_container_paddings">
               <div class="product_info">
-                {% for product_image in product_images %}
-                  {% ifequal product_image.product product %}
-                    {% if product_image.main_image %}
-                      <div class="prev_full">
-                        <a class="thumb-elegant" href="{{ product_image.image.url }}" data-lightgallery="item" data-slug="{{ product.slug }}">
-                          <img src="{{ product_image.image.url }}" alt="" width="540" height="451"/>
-                          <div class="thumb-elegant__overlay"></div>
-                        </a>
-                      </div>
-                    {% endif %}
-                  {% endifequal %}
+                {% for product_image in product.product_images.all %}
+                  {% if product_image.main_image %}
+                    <div class="prev_full">
+                      <a class="thumb-elegant" href="{{ product_image.image.url }}" data-lightgallery="item" data-slug="{{ product.slug }}">
+                        <img src="{{ product_image.image.url }}" alt="" width="540" height="451"/>
+                        <div class="thumb-elegant__overlay"></div>
+                      </a>
+                    </div>
+                  {% endif %}
                 {% endfor %}
                 <div class="group-6-columns" data-lightgallery="group">
-                  {% for product_image in product_images %}
-                    {% ifequal product_image.product product %}
-                      <div class="carousel-item active prev_min">
-                        <img src="{{ product_image.image.url }}" alt="" max-width="130" max-height="130" data-slug="{{ product.slug }}"/>
-                        <div class="thumb-elegant__overlay"></div>
-                      </div>
-                    {% endifequal %}
+                  {% for product_image in product.product_images.all %}
+                    <div class="carousel-item active prev_min">
+                      <img src="{{ product_image.image.url }}" alt="" max-width="130" max-height="130" data-slug="{{ product.slug }}"/>
+                      <div class="thumb-elegant__overlay"></div>
+                    </div>
                   {% endfor %}
                 </div>
               </div>
@@ -51,13 +47,11 @@
                       <td class='text-center'><strong>Размер, см</strong></td>
                       <td class='text-center'><strong>Цена, Руб.</strong></td>
                     </tr>
-                    {% for product_size in product_sizes %}
-                      {% ifequal product_size.product product %}                
+                    {% for product_size in product.product_sizes.all %}        
                       <tr>    
                         <td class='text-center'>{{ product_size.size }}</td>
                         <td class="text-center">{{ product_size.price }}</td>
                       </tr>
-                      {% endifequal %}
                     {% endfor %}
                     </tr>
                   </table>

@@ -1,6 +1,7 @@
 mattressplace/secret_settings.py
 mattressplace/secret_settings.json
 mattressplace/prod_settings.py
+mattressplace/media/
 
 *.swp
 
