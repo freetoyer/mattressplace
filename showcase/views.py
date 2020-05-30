@@ -8,20 +8,14 @@ from showcase.models import Category, Product, Product_Image, Product_Size, Cert
 
 
 def base_view(request):
-    categories = Category.objects.all()
-    context = {
-            'categories': categories
-            }
-    return render(request, 'base.html', context)
+    return render(request, 'base.html')
 
 
 def category_view(request, category_slug):
     category = Category.objects.get(slug=category_slug)
-    categories = Category.objects.all()
     products = Product.objects.filter(category__slug=category_slug)
     cataloguefile = CatalogueFile.objects.get(slug='catalogue')
     context = {
-            'categories': categories,
             'category': category,
             'products': products,
             'cataloguefile': cataloguefile
@@ -30,11 +24,9 @@ def category_view(request, category_slug):
 
 
 def certificates_view(request):
-    categories = Category.objects.all()
     certificates = Certificate.objects.all()
     cataloguefile = CatalogueFile.objects.get(slug='catalogue')
     context = {
-            'categories': categories,
             'certificates': certificates,
             'cataloguefile': cataloguefile
             }
@@ -42,10 +34,8 @@ def certificates_view(request):
 
 
 def contacts_view(request):
-    categories = Category.objects.all()
     cataloguefile = CatalogueFile.objects.get(slug='catalogue')
     context = {
-            'categories': categories,
             'cataloguefile': cataloguefile
             }
     return render(request, 'contacts.html', context)
