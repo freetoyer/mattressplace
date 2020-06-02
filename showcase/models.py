@@ -134,11 +134,5 @@ class CatalogueFile(models.Model):
     def __str__(self):
         return self.name
 
-#    def get_absolute_url(self):
-#       return reverse('category_detail', kwargs={'category_slug': self.slug})
 
-    def get_absolute_url(self):
-        url = self.file.url
-        path = url[1:]
-        return reverse('catalogue_file_download', kwargs={'path': path})
 

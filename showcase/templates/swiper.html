@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load showcase_tags %}
 {% load static %}
 {% block content %}
 
@@ -11,7 +12,8 @@
             <div class="swiper-slide-caption">
               <div class="container">
                 <h1 data-caption-animate="fadeInUpSmall">Инновации</h1>
-                <p class="big" style="max-width: 520px" data-caption-animate="fadeInRightSmall" data-caption-delay="300">Инновационный подход к делу, дает новый уровень расслабления и комфорта сна. На сегодняшний день компания BRN является одним из мировых лидеров по производству высококачественных и экологически чистых матрасов поставляя свою продукцию в 68 стран.</p><a class="button button-primary" href="{{ cataloguefile.get_absolute_url }}" data-caption-animate="fadeInRightSmall" data-caption-delay="550">Скачать каталог</a>
+                <p class="big" style="max-width: 520px" data-caption-animate="fadeInRightSmall" data-caption-delay="300">Инновационный подход к делу, дает новый уровень расслабления и комфорта сна. На сегодняшний день компания BRN является одним из мировых лидеров по производству высококачественных и экологически чистых матрасов поставляя свою продукцию в 68 стран.</p>
+                <a class="button button-primary" href="{% get_cataloguefile_url %}" data-caption-animate="fadeInRightSmall" data-caption-delay="550">Скачать каталог</a>
               </div>
             </div>
           </div>
@@ -21,7 +23,8 @@
             <div class="swiper-slide-caption">
               <div class="container">
                 <h1 data-caption-animate="fadeInUpSmall">Выгода!</h1>
-                <p class="big" style="max-width: 520px" data-caption-animate="fadeInRightSmall" data-caption-delay="300">Лучший аргумент при выборе матраса – соотношение цены и качества! Будьте уверены, наш продукт будет в два раза дешевле ближайшего аналога!</p><a class="button button-primary" href="{{ cataloguefile.get_absolute_url }}" data-caption-animate="fadeInRightSmall" data-caption-delay="550">Скачать каталог</a>
+                <p class="big" style="max-width: 520px" data-caption-animate="fadeInRightSmall" data-caption-delay="300">Лучший аргумент при выборе матраса – соотношение цены и качества! Будьте уверены, наш продукт будет в два раза дешевле ближайшего аналога!</p>
+                <a class="button button-primary" href="{% get_cataloguefile_url %}" data-caption-animate="fadeInRightSmall" data-caption-delay="550">Скачать каталог</a>
               </div>
             </div>
           </div>
@@ -31,7 +34,8 @@
             <div class="swiper-slide-caption">
               <div class="container">
                 <h1 data-caption-animate="fadeInUpSmall">Европейское качество!</h1>
-                <p class="big" style="max-width: 520px" data-caption-animate="fadeInRightSmall" data-caption-delay="300">Все комплектующие и сборка осуществляется в Европе, подтверждение тому многочисленные сертификаты и призовые места на европейских площадках.</p><a class="button button-primary" href="{{ cataloguefile.get_absolute_url }}" data-caption-animate="fadeInRightSmall" data-caption-delay="550">Скачать каталог</a>
+                <p class="big" style="max-width: 520px" data-caption-animate="fadeInRightSmall" data-caption-delay="300">Все комплектующие и сборка осуществляется в Европе, подтверждение тому многочисленные сертификаты и призовые места на европейских площадках.</p>
+                <a class="button button-primary" href="{% get_cataloguefile_url %}" data-caption-animate="fadeInRightSmall" data-caption-delay="550">Скачать каталог</a>
               </div>
             </div>
           </div>
