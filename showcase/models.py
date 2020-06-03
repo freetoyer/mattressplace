@@ -135,4 +135,21 @@ class CatalogueFile(models.Model):
         return self.name
 
 
+class Slide(models.Model):
+    title = models.CharField(max_length=50)
+    slug = models.SlugField()
+    text = RichTextField()
+    image = models.ImageField(upload_to=image_folder, blank=True)
+    active = models.BooleanField(default=True)
+     
+    class Meta:
+        verbose_name = 'Слайд'
+        verbose_name_plural = 'Слайды'
 
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title, allow_unicode=True)
+        super().save(*args, **kwargs)
