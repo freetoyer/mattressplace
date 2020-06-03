@@ -122,6 +122,27 @@ class Certificate(models.Model):
         super().save(*args, **kwargs)
 
 
+class Contacts(models.Model):
+    company_name = models.CharField(max_length=50)
+    slug = models.SlugField()
+    inn = models.CharField(max_length=10)
+    ogrn = models.CharField(max_length=13)
+    address = models.CharField(max_length=120)
+    phone = models.CharField(max_length=16)
+    email = models.EmailField()
+
+    class Meta:
+        verbose_name_plural = 'Контакты'
+
+    def __str__(self):
+        return self.company_name
+        
+    # def save(self, *args, **kwargs):
+    #     if not self.slug:
+    #         self.slug = slugify(self.company_name, allow_unicode=True)
+    #     super().save(*args, **kwargs)
+        
+        
 class CatalogueFile(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField()

@@ -1,6 +1,6 @@
 from django import template
 
-from ..models import Category, CatalogueFile, Slide
+from ..models import Category, Contacts, CatalogueFile, Slide
   
   
 register = template.Library()  
@@ -20,3 +20,8 @@ def get_cataloguefile_url():
 @register.simple_tag  
 def get_slides():  
     return Slide.objects.annotate()
+
+
+@register.simple_tag  
+def get_phone():  
+    return Contacts.objects.all()[0].phone

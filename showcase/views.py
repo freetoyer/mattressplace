@@ -4,7 +4,7 @@ import os
 from operator import attrgetter
 
 from mattressplace.settings import MEDIA_ROOT
-from showcase.models import Category, Product, Product_Image, Product_Size, Certificate, CatalogueFile
+from showcase.models import Category, Product, Product_Image, Product_Size, Certificate, Contacts, CatalogueFile
 
 
 def base_view(request):
@@ -31,5 +31,6 @@ def certificates_view(request):
 
 def contacts_view(request):
     context = {
+            'contacts': Contacts.objects.all()[0]
             }
     return render(request, 'contacts.html', context)
