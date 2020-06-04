@@ -24,4 +24,4 @@ def get_slides():
 
 @register.simple_tag  
 def get_phone():  
-    return Contacts.objects.all()[0].phone
+    return Contacts.objects.first().phone

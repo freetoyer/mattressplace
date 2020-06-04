@@ -31,6 +31,6 @@ def certificates_view(request):
 
 def contacts_view(request):
     context = {
-            'contacts': Contacts.objects.all()[0]
+            'contacts': Contacts.objects.first()
             }
     return render(request, 'contacts.html', context)

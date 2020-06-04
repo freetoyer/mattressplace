@@ -11,7 +11,7 @@
         {% for slide in slides_all %}
           {% if slide.active %}
           <div class="swiper-slide bg-gray-dark">
-            <div class="slide-inner" background="{% if slide.image %}url({{ slide.image.url }}){% endif %};">
+            <div class="slide-inner" {% if slide.image %}style="background-image: url({{ slide.image.url }});"{% endif %}>
               <div class="swiper-slide-caption">
                 <div class="container">
                   <h1 data-caption-animate="fadeInUpSmall">{{ slide.title }}</h1>
