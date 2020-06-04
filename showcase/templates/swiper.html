@@ -9,17 +9,19 @@
       <div class="swiper-wrapper">
         {% get_slides as slides_all%}
         {% for slide in slides_all %}
-        <div class="swiper-slide bg-gray-dark">
-          <div class="slide-inner" background="{% if slide.image %}url({{ slide.image.url }}){% endif %};">
-            <div class="swiper-slide-caption">
-              <div class="container">
-                <h1 data-caption-animate="fadeInUpSmall">{{ slide.title }}</h1>
-                <p class="big" style="max-width: 520px" data-caption-animate="fadeInRightSmall" data-caption-delay="300">{{ slide.text|safe }}</p>
-                <a class="button button-primary" href="{% get_cataloguefile_url %}" data-caption-animate="fadeInRightSmall" data-caption-delay="550">Скачать каталог</a>
+          {% if slide.active %}
+          <div class="swiper-slide bg-gray-dark">
+            <div class="slide-inner" background="{% if slide.image %}url({{ slide.image.url }}){% endif %};">
+              <div class="swiper-slide-caption">
+                <div class="container">
+                  <h1 data-caption-animate="fadeInUpSmall">{{ slide.title }}</h1>
+                  <p class="big" style="max-width: 520px" data-caption-animate="fadeInRightSmall" data-caption-delay="300">{{ slide.text|safe }}</p>
+                  <a class="button button-primary" href="{% get_cataloguefile_url %}" data-caption-animate="fadeInRightSmall" data-caption-delay="550">Скачать каталог</a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+          {% endif %}
         {% endfor %}
       </div>
       <!-- Swiper pagination-->
