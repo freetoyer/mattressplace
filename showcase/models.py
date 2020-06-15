@@ -91,6 +91,7 @@ class Product_Size(models.Model):
     class Meta:
         verbose_name = 'Размер'
         verbose_name_plural = 'Размеры'
+        ordering = ['price']
 
     def __str__(self):
         return self.name
